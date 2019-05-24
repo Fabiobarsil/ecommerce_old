@@ -1,3 +1,4 @@
+
 <?php 
 session_start();
 require_once("vendor/autoload.php");
@@ -276,6 +277,22 @@ $app->post("/admin/categories/:idcategory", function($idcategory){
 
 
 });
+
+$app->get("/categories/:idcategory", function($idcategory)
+{
+	$category = new Category();
+
+	$category->get((int)$idcategory);
+
+	$page = new Page();
+
+	$page->setTpl("category", [
+		'category'=>$category->getValues(),
+		'products'=>[]	
+	]);
+});
+
+
 
 $app->run();
 
